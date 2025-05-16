@@ -8,9 +8,11 @@ from src.datascience.pipeline.data_validation_pipeline import (
 from src.datascience.pipeline.data_transformation_pipeline import (
     DataTransformationPipeline,
 )
+from src.datascience.pipeline.model_trainer_pipeline import (
+    ModelTrainerTrainingPipeline,
+)
 
 STAGE_NAME = "Data Ingestion Stage"
-
 try:
     logger.info(f">>>> stage {STAGE_NAME} started <<<<")
     data_ingestion = DataIngestionTrainingPipeline()
@@ -22,7 +24,6 @@ except Exception as e:
 
 
 STAGE_NAME = "Data Validation Stage"
-
 try:
     logger.info(f">>>> stage {STAGE_NAME} started <<<<")
     data_ingestion = DataValidationTrainingPipeline()
@@ -34,14 +35,22 @@ except Exception as e:
 
 
 STAGE_NAME = "Data Transformation Stage"
+try:
+    logger.info(f">>>> stage {STAGE_NAME} started <<<<")
+    obj = DataTransformationPipeline()
+    obj.initiate_data_transformation()
+
+    logger.info(f">>>> stage {STAGE_NAME} completed <<<<\n")
+except Exception as e:
+    raise e
 
 
-if __name__ == "__main__":
-    try:
-        logger.info(f">>>> stage {STAGE_NAME} started <<<<")
-        obj = DataTransformationPipeline()
-        obj.initiate_data_transformation()
+STAGE_NAME = "Model Training Stage"
+try:
+    logger.info(f">>>> stage {STAGE_NAME} started <<<<")
+    obj = ModelTrainerTrainingPipeline()
+    obj.initiate_model_training()
+    logger.info(f">>>> stage {STAGE_NAME} completed <<<<\n")
 
-        logger.info(f">>>> stage {STAGE_NAME} completed <<<<\n")
-    except Exception as e:
-        raise e
+except Exception as e:
+    raise e
